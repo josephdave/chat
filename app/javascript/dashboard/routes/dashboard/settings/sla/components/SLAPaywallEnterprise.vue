@@ -18,13 +18,6 @@ const i18nKey = props.isOnChatwootCloud ? 'PAYWALL' : 'ENTERPRISE_PAYWALL';
 </script>
 
 <template>
-  <BaseEmptyState>
-    <BasePaywallModal
-      feature-prefix="SLA"
-      :i18n-key="i18nKey"
-      :is-on-chatwoot-cloud="isOnChatwootCloud"
-      :is-super-admin="isSuperAdmin"
-      @upgrade="emit('upgrade')"
-    />
-  </BaseEmptyState>
+  <!-- White-label mode: hide SLA paywall -->
+  <div style="display: none;" />
 </template>

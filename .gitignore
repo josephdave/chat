@@ -82,6 +82,7 @@ yalc.lock
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.pnpm-store/*
 
 # Vite Ruby
 /public/vite*

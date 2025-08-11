@@ -116,6 +116,15 @@ export default {
       const { pubsub_token: pubsubToken } = this.currentUser || {};
       this.setLocale(locale);
       this.latestChatwootVersion = latestChatwootVersion;
+      
+      // Set brand configuration from environment
+      window.brandConfig = {
+        name: window.chatwootConfig.brandName || 'Chatwoot',
+        logo: window.chatwootConfig.brandLogo,
+        favicon: window.chatwootConfig.brandFavicon,
+        primaryColor: window.chatwootConfig.brandPrimaryColor,
+        secondaryColor: window.chatwootConfig.brandSecondaryColor
+      };
       vueActionCable.init(this.store, pubsubToken);
       this.reconnectService = new ReconnectService(this.store, this.router);
       window.reconnectService = this.reconnectService;

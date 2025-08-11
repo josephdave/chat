@@ -1,0 +1,7 @@
+services:
+  rails:
+    entrypoint: ["sh", "docker/entrypoints/rails.sh"]
+  sidekiq:
+    entrypoint: ["sh", "docker/entrypoints/sidekiq.sh"]
+  vite:
+    entrypoint: ["sh", "docker/entrypoints/vite.sh"]

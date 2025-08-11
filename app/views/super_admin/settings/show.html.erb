@@ -13,12 +13,14 @@
   </div>
 </header>
 <section class="main-content__body px-8">
-  <% if Redis::Alfred.get(Redis::Alfred::CHATWOOT_INSTALLATION_CONFIG_RESET_WARNING) %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
-    <strong class="font-bold">Alert!</strong>
-    <span class="block sm:inline">Unauthorized premium changes detected in Chatwoot. To keep using them, please upgrade your plan.
-      Contact for help :</span><span class="inline rounded-full bg-red-200 px-2  text-white  ml-2">sales@chatwoot.com</span>
-    </div>
+  <% unless BrandConfig.hide_upgrade_options? %>
+    <% if Redis::Alfred.get(Redis::Alfred::CHATWOOT_INSTALLATION_CONFIG_RESET_WARNING) %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+      <strong class="font-bold">Alert!</strong>
+      <span class="block sm:inline">Unauthorized premium changes detected in Chatwoot. To keep using them, please upgrade your plan.
+        Contact for help :</span><span class="inline rounded-full bg-red-200 px-2  text-white  ml-2">sales@chatwoot.com</span>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="bg-white py-2 px-4 xl:px-0">
@@ -39,33 +41,37 @@
         </button>
       </div>
     </div>
-    <% if ChatwootApp.enterprise? %>
-      <div class="flex p-4 outline outline-1 outline-n-container rounded-lg items-start md:items-center shadow-sm flex-col md:flex-row">
-        <div class="flex flex-col flex-grow gap-1">
-          <div class="flex items-center gap-2">
-            <h2 class="h-5 leading-5 text-n-slate-12 text-sm font-medium">Current plan</h2>
-            <a href="<%= refresh_super_admin_settings_url %>" class="inline-flex gap-1 text-xs font-medium items-center text-woot-500 hover:text-woot-700">
-              <svg width="16" height="16"><use xlink:href="#icon-refresh-line" /></svg>
-              <span>Refresh</span>
-            </a>
+    <% unless BrandConfig.hide_upgrade_options? %>
+      <% if ChatwootApp.enterprise? %>
+        <div class="flex p-4 outline outline-1 outline-n-container rounded-lg items-start md:items-center shadow-sm flex-col md:flex-row">
+          <div class="flex flex-col flex-grow gap-1">
+            <div class="flex items-center gap-2">
+              <h2 class="h-5 leading-5 text-n-slate-12 text-sm font-medium">Current plan</h2>
+              <a href="<%= refresh_super_admin_settings_url %>" class="inline-flex gap-1 text-xs font-medium items-center text-woot-500 hover:text-woot-700">
+                <svg width="16" height="16"><use xlink:href="#icon-refresh-line" /></svg>
+                <span>Refresh</span>
+              </a>
+            </div>
+            <p class="text-n-slate-11 m-0 text-sm"><%= SuperAdmin::FeaturesHelper.plan_details.html_safe %></p>
           </div>
-          <p class="text-n-slate-11 m-0 text-sm"><%= SuperAdmin::FeaturesHelper.plan_details.html_safe %></p>
+          <a href="<%= ChatwootHub.billing_url %>" target="_blank" rel="noopener noreferrer">
+            <button class="mt-4 md:mt-0 flex gap-1 items-center bg-transparent shadow-sm h-9 hover:text-n-slate-12 hover:bg-slate-50 outline outline-1 outline-n-container rounded text-n-slate-11 font-medium p-2 focus:outline-none">
+              <svg width="16" height="16"><use xlink:href="#icon-settings-2-line" /></svg>
+              <span class="px-1">Manage</span>
+            </button>
+          </a>
         </div>
-        <a href="<%= ChatwootHub.billing_url %>" target="_blank" rel="noopener noreferrer">
-          <button class="mt-4 md:mt-0 flex gap-1 items-center bg-transparent shadow-sm h-9 hover:text-n-slate-12 hover:bg-slate-50 outline outline-1 outline-n-container rounded text-n-slate-11 font-medium p-2 focus:outline-none">
-            <svg width="16" height="16"><use xlink:href="#icon-settings-2-line" /></svg>
-            <span class="px-1">Manage</span>
-          </button>
-        </a>
-      </div>
+      <% end %>
     <% end %>
 
-    <% if ChatwootHub.pricing_plan != 'community' &&  User.count > ChatwootHub.pricing_plan_quantity %>
-    <div role="alert">
-      <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-        <p>You have <%= User.count %> agents. Please add more licenses to add more users.</p>
+    <% unless BrandConfig.hide_upgrade_options? %>
+      <% if ChatwootHub.pricing_plan != 'community' &&  User.count > ChatwootHub.pricing_plan_quantity %>
+      <div role="alert">
+        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <p>You have <%= User.count %> agents. Please add more licenses to add more users.</p>
+        </div>
       </div>
-    </div>
+      <% end %>
     <% end %>
 
 

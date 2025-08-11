@@ -11,28 +11,7 @@ const meta = {
   installationTypes: [INSTALLATION_TYPES.CLOUD, INSTALLATION_TYPES.ENTERPRISE],
 };
 
+// White-label mode: disable SLA routes
 export default {
-  routes: [
-    {
-      path: frontendURL('accounts/:accountId/settings/sla'),
-      component: SettingsWrapper,
-      props: {},
-      children: [
-        {
-          path: '',
-          name: 'sla_wrapper',
-          meta,
-          redirect: to => {
-            return { name: 'sla_list', params: to.params };
-          },
-        },
-        {
-          path: 'list',
-          name: 'sla_list',
-          meta,
-          component: Index,
-        },
-      ],
-    },
-  ],
+  routes: [],
 };

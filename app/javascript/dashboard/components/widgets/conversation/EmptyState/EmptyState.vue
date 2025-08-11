@@ -70,29 +70,7 @@ export default {
       v-if="uiFlags.isFetching || loadingChatList"
       :message="loadingIndicatorMessage"
     />
-    <!-- No inboxes attached -->
-    <div
-      v-if="!inboxesList.length && !uiFlags.isFetching && !loadingChatList"
-      class="clearfix mx-auto"
-    >
-      <OnboardingView v-if="isAdmin" />
-      <EmptyStateMessage v-else :message="$t('CONVERSATION.NO_INBOX_AGENT')" />
-    </div>
-    <!-- Show empty state images if not loading -->
-
-    <div
-      v-else-if="!uiFlags.isFetching && !loadingChatList"
-      class="flex flex-col items-center justify-center h-full"
-    >
-      <!-- No conversations available -->
-      <EmptyStateMessage
-        v-if="!allConversations.length"
-        :message="$t('CONVERSATION.NO_MESSAGE_1')"
-      />
-      <EmptyStateMessage
-        v-else-if="allConversations.length && !currentChat.id"
-        :message="conversationMissingMessage"
-      />
-    </div>
+    <!-- White-label mode: completely hide welcome/onboarding content -->
+    <div style="display: none;" />
   </div>
 </template>

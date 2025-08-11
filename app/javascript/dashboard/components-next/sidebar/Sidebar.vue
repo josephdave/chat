@@ -72,6 +72,7 @@ const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
 
+
 onMounted(() => {
   store.dispatch('labels/get');
   store.dispatch('inboxes/get');
@@ -120,7 +121,7 @@ const newReportRoutes = () => [
 const reportRoutes = computed(() => newReportRoutes());
 
 const menuItems = computed(() => {
-  return [
+  const items = [
     {
       name: 'Inbox',
       label: t('SIDEBAR.INBOX'),
@@ -212,28 +213,29 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
-      name: 'Captain',
-      icon: 'i-woot-captain',
-      label: t('SIDEBAR.CAPTAIN'),
-      children: [
-        {
-          name: 'Assistants',
-          label: t('SIDEBAR.CAPTAIN_ASSISTANTS'),
-          to: accountScopedRoute('captain_assistants_index'),
-        },
-        {
-          name: 'Documents',
-          label: t('SIDEBAR.CAPTAIN_DOCUMENTS'),
-          to: accountScopedRoute('captain_documents_index'),
-        },
-        {
-          name: 'Responses',
-          label: t('SIDEBAR.CAPTAIN_RESPONSES'),
-          to: accountScopedRoute('captain_responses_index'),
-        },
-      ],
-    },
+    // White-label mode: hide Captain features (premium)
+    // {
+    //   name: 'Captain',
+    //   icon: 'i-woot-captain',
+    //   label: t('SIDEBAR.CAPTAIN'),
+    //   children: [
+    //     {
+    //       name: 'Assistants',
+    //       label: t('SIDEBAR.CAPTAIN_ASSISTANTS'),
+    //       to: accountScopedRoute('captain_assistants_index'),
+    //     },
+    //     {
+    //       name: 'Documents',
+    //       label: t('SIDEBAR.CAPTAIN_DOCUMENTS'),
+    //       to: accountScopedRoute('captain_documents_index'),
+    //     },
+    //     {
+    //       name: 'Responses',
+    //       label: t('SIDEBAR.CAPTAIN_RESPONSES'),
+    //       to: accountScopedRoute('captain_responses_index'),
+    //     },
+    //   ],
+    // },
     {
       name: 'Contacts',
       label: t('SIDEBAR.CONTACTS'),
@@ -318,11 +320,12 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.CSAT'),
           to: accountScopedRoute('csat_reports'),
         },
-        {
-          name: 'Reports SLA',
-          label: t('SIDEBAR.REPORTS_SLA'),
-          to: accountScopedRoute('sla_reports'),
-        },
+        // White-label mode: hide SLA reports (premium)
+        // {
+        //   name: 'Reports SLA',
+        //   label: t('SIDEBAR.REPORTS_SLA'),
+        //   to: accountScopedRoute('sla_reports'),
+        // },
         {
           name: 'Reports Bot',
           label: t('SIDEBAR.REPORTS_BOT'),
@@ -349,53 +352,6 @@ const menuItems = computed(() => {
           name: 'WhatsApp',
           label: t('SIDEBAR.WHATSAPP'),
           to: accountScopedRoute('campaigns_whatsapp_index'),
-        },
-      ],
-    },
-    {
-      name: 'Portals',
-      label: t('SIDEBAR.HELP_CENTER.TITLE'),
-      icon: 'i-lucide-library-big',
-      children: [
-        {
-          name: 'Articles',
-          label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
-          activeOn: [
-            'portals_articles_index',
-            'portals_articles_new',
-            'portals_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_articles_index',
-          }),
-        },
-        {
-          name: 'Categories',
-          label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
-          activeOn: [
-            'portals_categories_index',
-            'portals_categories_articles_index',
-            'portals_categories_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_categories_index',
-          }),
-        },
-        {
-          name: 'Locales',
-          label: t('SIDEBAR.HELP_CENTER.LOCALES'),
-          activeOn: ['portals_locales_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_locales_index',
-          }),
-        },
-        {
-          name: 'Settings',
-          label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
-          activeOn: ['portals_settings_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_settings_index',
-          }),
         },
       ],
     },
@@ -476,27 +432,78 @@ const menuItems = computed(() => {
           icon: 'i-lucide-briefcase',
           to: accountScopedRoute('auditlogs_list'),
         },
+        // White-label mode: hide premium features
+        // {
+        //   name: 'Settings Custom Roles',
+        //   label: t('SIDEBAR.CUSTOM_ROLES'),
+        //   icon: 'i-lucide-shield-plus',
+        //   to: accountScopedRoute('custom_roles_list'),
+        // },
+        // {
+        //   name: 'Settings Sla',
+        //   label: t('SIDEBAR.SLA'),
+        //   icon: 'i-lucide-clock-alert',
+        //   to: accountScopedRoute('sla_list'),
+        // },
+// White-label mode: hide billing settings
+        // {
+        //   name: 'Settings Billing',
+        //   label: t('SIDEBAR.BILLING'),
+        //   icon: 'i-lucide-credit-card',
+        //   to: accountScopedRoute('billing_settings_index'),
+        // },
+      ],
+    },
+    {
+      name: 'Portals',
+      label: t('SIDEBAR.HELP_CENTER.TITLE'),
+      icon: 'i-lucide-library-big',
+      children: [
         {
-          name: 'Settings Custom Roles',
-          label: t('SIDEBAR.CUSTOM_ROLES'),
-          icon: 'i-lucide-shield-plus',
-          to: accountScopedRoute('custom_roles_list'),
+          name: 'Articles',
+          label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
+          activeOn: [
+            'portals_articles_index',
+            'portals_articles_new',
+            'portals_articles_edit',
+          ],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_articles_index',
+          }),
         },
         {
-          name: 'Settings Sla',
-          label: t('SIDEBAR.SLA'),
-          icon: 'i-lucide-clock-alert',
-          to: accountScopedRoute('sla_list'),
+          name: 'Categories',
+          label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
+          activeOn: [
+            'portals_categories_index',
+            'portals_categories_articles_index',
+            'portals_categories_articles_edit',
+          ],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_categories_index',
+          }),
         },
         {
-          name: 'Settings Billing',
-          label: t('SIDEBAR.BILLING'),
-          icon: 'i-lucide-credit-card',
-          to: accountScopedRoute('billing_settings_index'),
+          name: 'Locales',
+          label: t('SIDEBAR.HELP_CENTER.LOCALES'),
+          activeOn: ['portals_locales_index'],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_locales_index',
+          }),
+        },
+        {
+          name: 'Settings',
+          label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
+          activeOn: ['portals_settings_index'],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_settings_index',
+          }),
         },
       ],
     },
   ];
+
+  return items;
 });
 </script>
 

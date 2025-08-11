@@ -37,7 +37,7 @@ class DashboardController < ActionController::Base
       'DISABLE_USER_PROFILE_UPDATE',
       'DEPLOYMENT_ENV',
       'INSTALLATION_PRICING_PLAN'
-    ).merge(app_config)
+    ).merge(app_config).merge(brand_config)
   end
 
   def set_dashboard_scripts
@@ -72,6 +72,17 @@ class DashboardController < ActionController::Base
       IS_ENTERPRISE: ChatwootApp.enterprise?,
       AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
       GIT_SHA: GIT_HASH
+    }
+  end
+
+  def brand_config
+    {
+      BRAND_NAME: BrandConfig.brand_name,
+      BRAND_LOGO: BrandConfig.logo_url,
+      BRAND_FAVICON: BrandConfig.favicon_url,
+      BRAND_PRIMARY_COLOR: BrandConfig.primary_color,
+      BRAND_SECONDARY_COLOR: BrandConfig.secondary_color,
+      HIDE_UPGRADE_OPTIONS: BrandConfig.hide_upgrade_options?
     }
   end
 
