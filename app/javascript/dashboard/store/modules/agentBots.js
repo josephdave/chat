@@ -60,6 +60,13 @@ export const actions = {
       formData.append('bot_type', botData.bot_type || 'webhook');
       formData.append('outgoing_url', botData.outgoing_url);
 
+      // Add bot_config if available
+      if (botData.bot_config) {
+        Object.keys(botData.bot_config).forEach(key => {
+          formData.append(`bot_config[${key}]`, botData.bot_config[key]);
+        });
+      }
+
       // Add avatar file if available
       if (botData.avatar) {
         formData.append('avatar', botData.avatar);
@@ -85,6 +92,13 @@ export const actions = {
       formData.append('description', data.description);
       formData.append('bot_type', data.bot_type || 'webhook');
       formData.append('outgoing_url', data.outgoing_url);
+
+      // Add bot_config if available
+      if (data.bot_config) {
+        Object.keys(data.bot_config).forEach(key => {
+          formData.append(`bot_config[${key}]`, data.bot_config[key]);
+        });
+      }
 
       if (data.avatar) {
         formData.append('avatar', data.avatar);

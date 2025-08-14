@@ -79,6 +79,10 @@
         "LABEL": "Descripción",
         "PLACEHOLDER": "¿Qué hace este bot?"
       },
+      "MISSION": {
+        "LABEL": "Misión",
+        "PLACEHOLDER": "Define la misión e instrucciones del bot..."
+      },
       "WEBHOOK_URL": {
         "LABEL": "URL de Webhook",
         "PLACEHOLDER": "https://example.com/webhook",

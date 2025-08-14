@@ -46,7 +46,8 @@ class AgentBot < ApplicationRecord
     {
       id: id,
       name: name,
-      type: 'agent_bot'
+      type: 'agent_bot',
+      bot_config: bot_config
     }
   end
 

@@ -10,12 +10,27 @@ class Api::V1::Accounts::AgentBotsController < Api::V1::Accounts::BaseController
   def show; end
 
   def create
-    @agent_bot = Current.account.agent_bots.create!(permitted_params.except(:avatar_url))
+    create_params = permitted_params.except(:avatar_url)
+    
+    # Ensure bot_config is properly formatted
+    if create_params[:bot_config].present?
+      create_params[:bot_config] = create_params[:bot_config].to_h
+    end
+    
+    @agent_bot = Current.account.agent_bots.create!(create_params)
     process_avatar_from_url
   end
 
   def update
-    @agent_bot.update!(permitted_params.except(:avatar_url))
+    update_params = permitted_params.except(:avatar_url)
+    
+    # Handle bot_config merging to preserve existing data
+    if update_params[:bot_config].present?
+      existing_config = @agent_bot.bot_config || {}
+      update_params[:bot_config] = existing_config.merge(update_params[:bot_config].to_h)
+    end
+    
+    @agent_bot.update!(update_params)
     process_avatar_from_url
   end
 
@@ -42,7 +57,7 @@ class Api::V1::Accounts::AgentBotsController < Api::V1::Accounts::BaseController
   end
 
   def permitted_params
-    params.permit(:name, :description, :outgoing_url, :avatar, :avatar_url, :bot_type, bot_config: {})
+    params.permit(:name, :description, :outgoing_url, :avatar, :avatar_url, :bot_type, bot_config: [:mission])
   end
 
   def process_avatar_from_url

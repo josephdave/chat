@@ -41,6 +41,7 @@ const formState = reactive({
   botName: '',
   botDescription: '',
   botUrl: '',
+  botMission: '',
   botAvatar: null,
   botAvatarUrl: '',
 });
@@ -119,6 +120,7 @@ const resetForm = () => {
     botName: '',
     botDescription: '',
     botUrl: '',
+    botMission: '',
     botAvatar: null,
     botAvatarUrl: '',
   });
@@ -154,12 +156,17 @@ const handleSubmit = async () => {
   if (v$.value.$invalid) return;
   if (showAccessToken.value) return;
 
+  const existingBotConfig = props.selectedBot?.bot_config || {};
   const botData = {
     name: formState.botName,
     description: formState.botDescription,
     outgoing_url: formState.botUrl,
     bot_type: 'webhook',
     avatar: formState.botAvatar,
+    bot_config: {
+      ...existingBotConfig,
+      mission: formState.botMission,
+    },
   };
 
   const isCreate = props.type === MODAL_TYPES.CREATE;
@@ -216,6 +223,7 @@ const initializeForm = () => {
     formState.botName = name || '';
     formState.botDescription = description || '';
     formState.botUrl = botUrl || botConfig?.webhook_url || '';
+    formState.botMission = botConfig?.mission || '';
     formState.botAvatarUrl = thumbnail || '';
 
     if (botAccessToken && props.type === MODAL_TYPES.EDIT) {
@@ -305,6 +313,14 @@ defineExpose({ dialogRef });
           v-model="formState.botDescription"
           :label="$t('AGENT_BOTS.FORM.DESCRIPTION.LABEL')"
           :placeholder="$t('AGENT_BOTS.FORM.DESCRIPTION.PLACEHOLDER')"
+        />
+
+        <TextArea
+          id="bot-mission"
+          v-model="formState.botMission"
+          :label="$t('AGENT_BOTS.FORM.MISSION.LABEL')"
+          :placeholder="$t('AGENT_BOTS.FORM.MISSION.PLACEHOLDER')"
+          :rows="4"
         />
 
         <Input
