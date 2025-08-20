@@ -3,15 +3,15 @@
 <% account_user = @resource&.account_users&.first %>
 
 <% if account_user&.inviter.present? && @resource.unconfirmed_email.blank? %>
-  <p><%= account_user.inviter.name %>, de <%= account_user.account.name %>, te ha invitado a probar <%= global_config['BRAND_NAME'] || BrandConfig.brand_name %>.</p>
+  <p><%= account_user.inviter.name %>, de <%= account_user.account.name %>, te ha invitado a usar <%= ENV['BRAND_NAME'] %>.</p>
 <% end %>
 
 <% if @resource.confirmed? %>
-  <p>Puedes iniciar sesión en tu cuenta de <%= global_config['BRAND_NAME'] || BrandConfig.brand_name %> a través del siguiente enlace:</p>
+  <p>Puedes iniciar sesión en tu cuenta de <%= ENV['BRAND_NAME'] %> a través del siguiente enlace:</p>
 <% else %>
   <% if account_user&.inviter.blank? %>
   <p>
-    ¡Bienvenido a <%= global_config['BRAND_NAME'] || BrandConfig.brand_name %>! Tenemos un conjunto de potentes herramientas listas para que explores. Antes de eso necesitamos verificar rápidamente tu dirección de correo electrónico para asegurarnos de que realmente eres tú.
+    ¡Bienvenido a <%= ENV['BRAND_NAME'] %>! Tenemos un conjunto de potentes herramientas listas para que explores. Antes de eso necesitamos verificar rápidamente tu dirección de correo electrónico para asegurarnos de que realmente eres tú.
   </p>
   <% end %>
   <p>Por favor, toma un momento para hacer clic en el siguiente enlace y activar tu cuenta.</p>
