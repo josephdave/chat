@@ -39,7 +39,7 @@ const greetingMessage = computed(() => {
       <p class="text-n-slate-11 max-w-2xl text-base">
         {{
           $t('ONBOARDING.DESCRIPTION', {
-            installationName: globalConfig.installationName,
+            installationName: globalConfig.brandName,
           })
         }}
       </p>

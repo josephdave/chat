@@ -45,13 +45,13 @@ export default {
           <div class="mb-4">
             <img
               :src="globalConfig.logo"
-              :alt="globalConfig.installationName"
+              :alt="globalConfig.brandName"
               class="block w-auto h-8 dark:hidden"
             />
             <img
               v-if="globalConfig.logoDark"
               :src="globalConfig.logoDark"
-              :alt="globalConfig.installationName"
+              :alt="globalConfig.brandName"
               class="hidden w-auto h-8 dark:block"
             />
             <h2

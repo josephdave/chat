@@ -12,7 +12,7 @@ describe('useBranding', () => {
   beforeEach(() => {
     mockGlobalConfig = {
       value: {
-        installationName: 'MyCompany',
+        brandName: 'MyCompany',
       },
     };
 
@@ -24,7 +24,7 @@ describe('useBranding', () => {
   });
 
   describe('replaceInstallationName', () => {
-    it('should replace "Chatwoot" with installation name when both text and installation name are provided', () => {
+    it('should replace "Chatwoot" with brand name when both text and brand name are provided', () => {
       const { replaceInstallationName } = useBranding();
       const result = replaceInstallationName('Welcome to Chatwoot');
 
@@ -84,7 +84,7 @@ describe('useBranding', () => {
 
     it('should handle special characters in installation name', () => {
       mockGlobalConfig.value = {
-        installationName: 'My-Company & Co.',
+        brandName: 'My-Company & Co.',
       };
 
       const { replaceInstallationName } = useBranding();
